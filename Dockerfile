@@ -2,8 +2,8 @@
 FROM ubuntu:20.04
 
 # Update apt
-RUN apt -y update
+RUN apt-get -y update
 # Install what's needed
-RUN apt -y install build-essential gdb valgrind curl git-all
+RUN apt-get -y install build-essential gdb valgrind curl git-all
 
 WORKDIR /home
