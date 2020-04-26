@@ -15,13 +15,13 @@ docker pull ouweis/doc-debug
 And now run it like this
 
 ```shell
-docker run -it --rm -v ${PWD}:/home ouweis/doc-debug /bin/bash
+docker run -it --rm -v $PWD:/home ouweis/doc-debug
 ```
 
 You can also make an alias of it
 
 ```shell
-alias doc-debug="docker run -it --rm -v $PWD:/home ouweis/doc-debug /bin/bash"
+alias doc-debug="docker run -it --rm -v '$PWD:/home' ouweis/doc-debug"
 ```
 
 ## TODO
