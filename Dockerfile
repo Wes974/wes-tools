@@ -1,4 +1,4 @@
-# Use ubuntu 19.04 as base image
+# Use ubuntu 20.04 as base image
 FROM ubuntu:20.04
 
 # Set timezone
