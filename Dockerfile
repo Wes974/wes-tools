@@ -25,8 +25,8 @@ RUN curl -sL -O install-node.now.sh/lts && bash lts --yes
 RUN git clone https://github.com/Wes974/dotfiles
 
 # Move config files
-RUN mkdir /home/.config
-RUN mv dotfiles/nvim /home/.config/nvim
-RUN mv dotfiles/zshrc /home/.zshrc
+RUN mkdir .config
+RUN mv dotfiles/nvim .config/nvim
+RUN mv dotfiles/zshrc .zshrc
 
 WORKDIR /home
