@@ -24,6 +24,6 @@ RUN git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTO
 RUN curl -sL -O install-node.now.sh/lts && bash lts --yes # && rm lts
 
 # Move config files
-RUN git clone https://github.com/Wes974/dotfiles && mkdir $HOME/.config && mv dotfiles/nvim $HOME/.config/nvim && mv dotfiles/zshrc $HOME/.zshrc
+RUN git clone https://github.com/Wes974/dotfiles && mkdir $HOME/.config && mv dotfiles/nvim $HOME/.config/nvim && mv dotfiles/zshrc $HOME/.zshrc && mv dotfiles/p10k.zsh $HOME/.p10k.zsh 
 
 WORKDIR /home
