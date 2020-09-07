@@ -1,4 +1,4 @@
-# doc-debug
+# wes-tools
 
 Dockerfile for building a Linux container for testing and debugging C programs.
 
@@ -9,23 +9,22 @@ Useful to access tools not available or partially working on macOS (GDB, Valgrin
 Pull the dockerfile
 
 ```shell
-docker pull ouweis/doc-debug
+docker pull ouweis/wes-tools
 ```
 
 And now run it like this
 
 ```shell
-docker run -it --rm -v $PWD:/home ouweis/doc-debug
+docker run -it --rm -v $PWD:/home ouweis/wes-tools /bin/zsh
 ```
 
 You can also make an alias of it
 
 ```shell
-alias doc-debug="docker run -it --rm -v '$PWD:/home' ouweis/doc-debug"
+alias wes-tools="docker run -it --rm -v '$PWD:/home' ouweis/wes-tools /bin/zsh"
 ```
 
 ## TODO
 
-- [ ] Add custom config for shell
+- [X] Add custom config for shell
 - [ ] Add other tools ?
-

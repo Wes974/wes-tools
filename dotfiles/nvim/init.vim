@@ -6,6 +6,15 @@
 "                                                                              "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+let g:coc_global_extensions = [
+\ 'coc-snippets',
+\ 'coc-pairs',
+\ 'coc-lists',
+\ 'coc-highlight',
+\ 'coc-python',
+\ 'coc-clangd'
+\ ]
+
 "   vim-plug    ----------------------------------------------------------------
 
 " Specify a directory for plugins
