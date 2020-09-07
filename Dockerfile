@@ -24,7 +24,7 @@ COPY ./dotfiles dotfiles
 RUN cp -r dotfiles/nvim $HOME/.config/nvim && \
        cp dotfiles/zshrc $HOME/.zshrc && \
        cp dotfiles/p10k.zsh $HOME/.p10k.zsh && \
-       nvim --headless +PlugInstall +qall && \
-       timeout 2m nvim --headless +CocUpdate; exit 0
+       nvim --headless +PlugInstall +qall
+RUN timeout 1m nvim --headless +CocUpdate; exit 0
 
 WORKDIR /home
