@@ -25,12 +25,15 @@ RUN curl -sL -O install-node.now.sh/lts && bash lts --yes # && rm lts
 RUN sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'; npm install -g neovim
 
-#------------------------------------------#
-# TODO: Replace dotfiles with files to ADD #
-#------------------------------------------#
-# Move config files
-RUN git clone https://github.com/Wes974/dotfiles && cp -r dotfiles/nvim $HOME/.config/nvim && cp dotfiles/zshrc $HOME/.zshrc && cp dotfiles/p10k.zsh $HOME/.p10k.zsh
 
+# Move config files
+COPY ./dotfiles dotfiles
+RUN cp -r dotfiles/nvim $HOME/.config/nvim && cp dotfiles/zshrc $HOME/.zshrc && cp dotfiles/p10k.zsh $HOME/.p10k.zsh
+
+# Install Plugins
 RUN nvim --headless +PlugInstall +qall
+
+# Install coc.nvim extensions
+# TODO
 
 WORKDIR /home
