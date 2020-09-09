@@ -5,7 +5,12 @@ FROM ubuntu:20.04
 ENV TZ=Europe/Paris
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone && \
        apt-get -y update && \
-       apt-get -y install build-essential gdb valgrind curl git-all zsh neovim
+       apt-get -y install build-essential gdb valgrind curl git-all zsh neovim lsb-release wget software-properties-common
+
+# Install llvm
+ENV LLVM_VERSION=11
+RUN wget https://apt.llvm.org/llvm.sh && chmod +x llvm.sh && ./llvm.sh ${LLVM_VERSION} && \
+       update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-${LLVM_VERSION} 100
 
 # Install oh-my-zsh and some plugins + powerlevel10k and build gitstatus
 RUN sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" && \
@@ -15,7 +20,7 @@ RUN sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/inst
        $HOME/.oh-my-zsh/custom/themes/powerlevel10k/gitstatus/build -w -s
 
 # Install node.js for installing coc.nvim
-RUN curl -sL -O install-node.now.sh/lts && bash lts --yes # && rm lts
+RUN curl -sL -O install-node.now.sh/lts && bash lts --yes && rm lts
 RUN sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'; npm install -g neovim
 
@@ -25,6 +30,6 @@ RUN cp -r dotfiles/nvim $HOME/.config/nvim && \
        cp dotfiles/zshrc $HOME/.zshrc && \
        cp dotfiles/p10k.zsh $HOME/.p10k.zsh && \
        nvim --headless +PlugInstall +qall
-RUN timeout 1m nvim --headless +CocUpdate; exit 0
+RUN timeout 2m nvim --headless +CocUpdateSync; exit 0
 
 WORKDIR /home
