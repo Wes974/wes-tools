@@ -9,7 +9,7 @@ Useful to access tools not available or partially working on macOS (GDB, Valgrin
 Pull the dockerfile
 
 ```shell
-docker pull ouweis/wes-tools
+docker pull ouweis/wes-tools:latest
 ```
 
 And now run it like this
@@ -18,10 +18,12 @@ And now run it like this
 docker run -it --rm -v $PWD:/home ouweis/wes-tools /bin/zsh
 ```
 
-You can also make an alias of it
+And you can also make it a function to call it more easily.
 
 ```shell
-alias wes-tools="docker run -it --rm -v '$PWD:/home' ouweis/wes-tools /bin/zsh"
+function wes-tools() {
+  docker run -it --rm -v $PWD:/home ouweis/wes-tools /bin/zsh
+}
 ```
 
 ## TODO
