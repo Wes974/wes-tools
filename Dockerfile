@@ -1,31 +1,29 @@
-# Use ubuntu 20.04 as base image
-FROM ubuntu:20.04
+# Use Arch Linux as base image.
+FROM archlinux:latest
 
-# Set timezone to fix error, update apt and install what's needed
-ENV TZ=Europe/Paris
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone && \
-       apt-get -y update && \
-       apt-get -y install build-essential gdb valgrind curl git-all zsh neovim lsb-release wget software-properties-common
+# Import dotfiles folder.
+COPY ./dotfiles dotfiles
 
-# Install llvm
-ENV LLVM_VERSION=11
-RUN wget https://apt.llvm.org/llvm.sh && chmod +x llvm.sh && ./llvm.sh ${LLVM_VERSION} && \
-       update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-${LLVM_VERSION} 100
+# Install what's needed.
+RUN yes | pacman -Syuu; pacman -S --needed --noconfirm - < dotfiles/pkglist.txt
 
-# Install oh-my-zsh and some plugins + powerlevel10k and build gitstatus
-RUN sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" && \
+# Add non root user for running makepkg to install yay for installing some AUR packages.
+RUN useradd non_root && mkdir /home/non_root && chown -R non_root:non_root /home/non_root && echo 'non_root ALL=NOPASSWD: ALL' >> /etc/sudoers
+RUN sudo -u non_root bash -c 'cd ~ && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si --noconfirm && yay -S --noconfirm criterion fff-git lcov'
+
+# Install oh-my-zsh and some plugins + powerlevel10k and build gitstatus.
+RUN cd ~ && sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" && \
        git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting && \
        git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/zsh-completions && \
        git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k && \
-       $HOME/.oh-my-zsh/custom/themes/powerlevel10k/gitstatus/build -w -s
+       $HOME/.oh-my-zsh/custom/themes/powerlevel10k/gitstatus/build -w
 
-# Install node.js for installing coc.nvim
-RUN curl -sL -O install-node.now.sh/lts && bash lts --yes && rm lts
+# Install vim-plug + Neovim providers for Python and Node.
 RUN sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
-       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'; npm install -g neovim
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'; \
+       npm install -g neovim && pip install -U wheel pynvim neovim
 
-# Move config files and install neovim plugins + workaround to install coc extensions
-COPY ./dotfiles dotfiles
+# Move config files and install Neovim plugins + workaround to install coc.nvim extensions
 RUN cp -r dotfiles/nvim $HOME/.config/nvim && \
        cp dotfiles/zshrc $HOME/.zshrc && \
        cp dotfiles/p10k.zsh $HOME/.p10k.zsh && \
