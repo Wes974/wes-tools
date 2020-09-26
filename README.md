@@ -1,6 +1,6 @@
 # wes-tools
 
-Dockerfile for building a Linux container for testing and debugging C programs.
+Dockerfile for building an Arch Linux container for testing and debugging C programs.
 
 Useful to access tools not available or partially working on macOS (GDB, Valgrind, ...).
 
@@ -26,7 +26,3 @@ function wes-tools() {
 }
 ```
 
-## TODO
-
-- [X] Add custom config for shell
-- [ ] Add other tools ?
