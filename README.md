@@ -22,7 +22,7 @@ And you can also make it a function to call it more easily.
 
 ```shell
 function wes-tools() {
-  docker run -it --rm -v $PWD:/home ouweis/wes-tools /bin/zsh
+  docker run -it --rm -v $PWD:/home/ouweis/wes-tools /bin/zsh
 }
 ```
 
