@@ -34,8 +34,6 @@ plugins=(
     git 
     colored-man-pages
     colorize
-    docker
-    docker-compose
     zsh-completions
     zsh-syntax-highlighting
 )
@@ -52,6 +50,19 @@ export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/git/bin:/us
 #==============================================================================#
 
 alias vim='/usr/bin/nvim'
+
+# Faster switch back to alted progs
+fancy-ctrl-z () {
+  if [[ $#BUFFER -eq 0 ]]; then
+    BUFFER="fg"
+    zle accept-line
+  else
+    zle push-input
+    zle clear-screen
+  fi
+}
+zle -N fancy-ctrl-z
+bindkey '^Z' fancy-ctrl-z
 
 #==============================================================================#
 #   General Options                                                            #
