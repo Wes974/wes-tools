@@ -41,8 +41,10 @@ python
 python-pip
 screen
 shellcheck
+strace
 tar
 tmux
+tree
 unzip
 valgrind
 wget

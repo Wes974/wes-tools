@@ -31,7 +31,8 @@ RUN sed -i '93d' /etc/pacman.conf && sed -i '98d' /etc/pacman.conf; yes | pacman
               https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'; \
        npm install -g neovim && pip install -U pynvim neovim && \
        # Move my dotfiles for Neovim and Zsh to the appropriate places.
-       cp -r /dotfiles/nvim $HOME/.config/nvim && cp /dotfiles/zshrc $HOME/.zshrc && cp /dotfiles/p10k.zsh $HOME/.p10k.zsh && \
+       cp -r /dotfiles/nvim $HOME/.config/nvim && cp /dotfiles/zshrc $HOME/.zshrc && \
+       cp /dotfiles/p10k.zsh $HOME/.p10k.zsh && cp /dotfiles/clang-format $HOME/.clang-format \
        # Install vim plugins via workaround.
        nvim --headless +PlugInstall +qall && timeout 2m nvim --headless +CocUpdateSync; exit 0
 
