@@ -10,7 +10,7 @@ let g:coc_global_extensions = [
 \ 'coc-snippets',
 \ 'coc-pairs',
 \ 'coc-lists',
-\ 'coc-actions'
+\ 'coc-actions',
 \ 'coc-highlight',
 \ 'coc-python',
 \ 'coc-clangd'
@@ -171,15 +171,6 @@ endif
 " More natural split opening
 set splitbelow
 set splitright
-
-"   Spell-checking -------------------------------------------------------------
-
-" Spell languages
-set spelllang=en,fr
-" Enable spell-checking for Markdown files
-autocmd BufRead,BufNewFile *.md setlocal spell
-" Enable spell-checking for git commit
-autocmd FileType gitcommit setlocal spell
 
 "   Plugins --------------------------------------------------------------------
 
