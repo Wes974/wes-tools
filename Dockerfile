@@ -5,7 +5,7 @@ FROM archlinux:latest
 COPY ./dotfiles dotfiles
 
 # Install what's needed.
-RUN yes | pacman -Syuu; pacman -S --needed --noconfirm - < dotfiles/pkglist.txt && \
+RUN sed -i '93d' /etc/pacman.conf && sed -i '98d' /etc/pacman.conf; yes | pacman -Syuu; pacman -S --needed --noconfirm - < dotfiles/pkglist.txt && \
        # Manual install of Criterion.
        # Can be replace with commented code below, which will install yay if you want to install AUR packages.
        # (A bit of an overkill for just Criterion).

@@ -27,6 +27,7 @@ jsoncpp
 less
 llvm
 make
+man
 man-db
 man-pages
 neovim
