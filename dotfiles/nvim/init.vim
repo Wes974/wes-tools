@@ -13,7 +13,8 @@ let g:coc_global_extensions = [
 \ 'coc-actions',
 \ 'coc-highlight',
 \ 'coc-python',
-\ 'coc-clangd'
+\ 'coc-clangd',
+\ 'coc-sh'
 \ ]
 
 "   vim-plug    ----------------------------------------------------------------
