@@ -53,6 +53,8 @@ alias vim='/usr/bin/nvim'
 
 alias g='gcc -Wall -Wextra -Werror -pedantic -std=c99 -fsanitize=address -g'
 
+alias valgrind='valgrind --leak-check=full --show-leak-kinds=all --leak-resolution=high --track-origins=yes --vgdb=yes'
+
 # Faster switch back to alted progs
 fancy-ctrl-z () {
   if [[ $#BUFFER -eq 0 ]]; then
