@@ -1,0 +1,18 @@
+{
+    "diagnostic.refreshOnInsertMode": true,
+    "diagnostic.checkCurrentLine": true,
+    "suggest.triggerAfterInsertEnter": true,
+    "clangd.arguments": [
+        "--clang-tidy",
+        "--header-insertion=never"
+    ],
+    "clangd.fallbackFlags": [
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-std=c++17",
+        "-pedantic",
+        "-Wold-style-definition",
+        "-Wstrict-prototypes"
+    ]
+}
