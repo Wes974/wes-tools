@@ -3,6 +3,7 @@ autoconf-archive
 automake
 base-devel
 bison
+boost
 clang
 cmake
 coreutils
