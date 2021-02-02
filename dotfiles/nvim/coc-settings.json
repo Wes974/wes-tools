@@ -13,6 +13,7 @@
         "-std=c++17",
         "-pedantic",
         "-Wold-style-definition",
-        "-Wstrict-prototypes"
+        "-Wstrict-prototypes",
+        "-I."
     ]
 }

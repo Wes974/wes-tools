@@ -53,10 +53,10 @@ alias vim='/usr/bin/nvim'
 
 # Alias for gcc
 alias g='gcc -Wall -Wextra -Werror -pedantic -std=c99 -fsanitize=address -g'
-alias gcc="grc --colour=auto gcc -Wextra -Wall -std=c99 -pedantic"
-alias g++="grc --colour=auto g++ -Wall -Wextra -pedantic -std=c++17"
-alias g++_sanitize="grc --colour=auto g++ -Wall -Wextra -pedantic -std=c++17 -fsanitize=address -g"
-alias gcc_sanitize="grc --colour=auto gcc -Wextra -Wall -std=c99 -pedantic -fsanitize=address -g"
+alias gcc="gcc -Wextra -Wall -std=c99 -pedantic"
+alias g++="g++ -Wall -Wextra -pedantic -std=c++17"
+alias g++_sanitize="g++ -Wall -Wextra -pedantic -std=c++17 -fsanitize=address -g"
+alias gcc_sanitize="gcc -Wextra -Wall -std=c99 -pedantic -fsanitize=address -g"
 
 alias valgrind='valgrind --leak-check=full --show-leak-kinds=all --leak-resolution=high --track-origins=yes --vgdb=yes'
 
