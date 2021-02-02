@@ -172,6 +172,10 @@ endif
 " More natural split opening
 set splitbelow
 set splitright
+set swb=usetab,split
+
+" Floatting windows transparency
+set winblend=10
 
 "   Plugins --------------------------------------------------------------------
 
@@ -206,6 +210,12 @@ nnoremap <expr> j (v:count > 1 ? "m'" . v:count : '') . 'gj'
 
 " Map ; to :
 nnoremap ; :
+
+" Easier split navigations.
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 
 "   coc.nvim config     --------------------------------------------------------
 
