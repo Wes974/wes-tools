@@ -41,7 +41,7 @@ RUN sed -i '93d' /etc/pacman.conf && sed -i '98d' /etc/pacman.conf; yes | pacman
        cp -r /dotfiles/nvim $HOME/.config/nvim && cp /dotfiles/zshrc $HOME/.zshrc && \
        cp /dotfiles/p10k.zsh $HOME/.p10k.zsh && cp /dotfiles/clang-format /.clang-format && \
        # Install vim plugins via workaround.
-       nvim --headless +PlugInstall +qall && timeout 5m nvim --headless +CocUpdateSync; exit 0
-# && nvim -c 'CocInstall -sync |q' && nvim -c 'CocUpdateSync|q'
+       nvim --headless +PlugInstall +qall && timeout 5m nvim --headless +CocUpdateSync; exit 0 && \
+       nvim -c 'CocInstall -sync |q' && nvim -c 'CocUpdateSync|q' && timeout 5m nvim --headless +CocUpdateSync; exit 0
 
 WORKDIR /home

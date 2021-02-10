@@ -10,6 +10,7 @@ let g:coc_global_extensions = [
 \ 'coc-snippets',
 \ 'coc-pairs',
 \ 'coc-actions',
+\ 'coc-lists',
 \ 'coc-highlight',
 \ 'coc-python',
 \ 'coc-clangd',
