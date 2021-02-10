@@ -2,6 +2,7 @@ autoconf
 autoconf-archive
 automake
 base-devel
+bat
 bison
 boost
 clang
@@ -15,6 +16,7 @@ gcc-libs
 gdb
 git
 glibc
+gnupg
 go
 grep
 gtk3
@@ -34,12 +36,14 @@ man-pages
 neovim
 nodejs
 npm
+openbsd-netcat
 openssh
 openssl
 openssl-1.0
 perl
 python
 python-pip
+python-pre-commit
 screen
 shellcheck
 strace

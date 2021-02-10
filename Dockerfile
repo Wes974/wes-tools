@@ -13,6 +13,7 @@ RUN sed -i '93d' /etc/pacman.conf && sed -i '98d' /etc/pacman.conf; yes | pacman
        cp -r criterion-v2.3.3/include/criterion /usr/include/ && cp criterion-v2.3.3/lib/* /usr/lib/ && \
        cp criterion-v2.3.3/share/pkgconfig/* /usr/share/pkgconfig && \
        rm -rf criterion-v2.3.3 rm -rf criterion-v2.3.3-linux-x86_64.tar.bz2 && \
+       ln -s /usr/bin/gpg /usr/local/bin/gpg && \
        # Add non root user for running makepkg to install yay for installing some AUR packages.
        # useradd non_root && mkdir /home/non_root && chown -R non_root:non_root /home/non_root && \
        # echo 'non_root ALL=NOPASSWD: ALL' >> /etc/sudoers && \
@@ -28,13 +29,13 @@ RUN sed -i '93d' /etc/pacman.conf && sed -i '98d' /etc/pacman.conf; yes | pacman
        $HOME/.oh-my-zsh/custom/themes/powerlevel10k/gitstatus/build -w && \
        # Install vim-plug + Neovim providers for Python and Node.
        sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
-              https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'; \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'; \
        npm install -g neovim && pip install -U pynvim neovim && \
        # Move my dotfiles for Neovim and Zsh to the appropriate places.
        cp -r /dotfiles/nvim $HOME/.config/nvim && cp /dotfiles/zshrc $HOME/.zshrc && \
        cp /dotfiles/p10k.zsh $HOME/.p10k.zsh && cp /dotfiles/clang-format /.clang-format && \
        # Install vim plugins via workaround.
-       nvim --headless +PlugInstall +qall && timeout 2m nvim --headless +CocUpdateSync; exit 0
-       # && nvim -c 'CocInstall -sync |q' && nvim -c 'CocUpdateSync|q'
+       nvim --headless +PlugInstall +qall && timeout 5m nvim --headless +CocUpdateSync; exit 0
+# && nvim -c 'CocInstall -sync |q' && nvim -c 'CocUpdateSync|q'
 
 WORKDIR /home
