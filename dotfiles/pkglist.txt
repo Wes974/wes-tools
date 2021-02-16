@@ -5,6 +5,7 @@ base-devel
 bat
 bison
 boost
+boost-libs
 clang
 cmake
 coreutils
@@ -15,7 +16,6 @@ gcc
 gcc-libs
 gdb
 git
-glibc
 gnupg
 go
 grep
@@ -52,7 +52,6 @@ tmux
 tree
 unzip
 valgrind
-wget
 wget
 which
 zip
