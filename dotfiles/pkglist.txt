@@ -3,7 +3,6 @@ autoconf-archive
 automake
 base-devel
 bat
-bison
 boost
 boost-libs
 clang
@@ -28,6 +27,7 @@ json-c
 json-glib
 jsoncpp
 less
+libxslt
 llvm
 make
 man

@@ -18,11 +18,11 @@ RUN sed -i '93d' /etc/pacman.conf && sed -i '98d' /etc/pacman.conf;  \
 # Manual install of Criterion.
 # Can be replace with commented code below, which will install yay if you want to install AUR packages.
 # (A bit of an overkill for just Criterion).
-# RUN wget https://github.com/Snaipe/Criterion/releases/download/v2.3.3/criterion-v2.3.3-linux-x86_64.tar.bz2 -O - | tar -xj && \
-#        cp -r criterion-v2.3.3/include/criterion /usr/include/ && cp criterion-v2.3.3/lib/* /usr/lib/ && \
-#        cp criterion-v2.3.3/share/pkgconfig/* /usr/share/pkgconfig && \
-#        rm -rf criterion-v2.3.3 rm -rf criterion-v2.3.3-linux-x86_64.tar.bz2 && \
-#        ln -s /usr/bin/gpg /usr/local/bin/gpg
+RUN wget https://github.com/Snaipe/Criterion/releases/download/v2.3.3/criterion-v2.3.3-linux-x86_64.tar.bz2 -O - | tar -xj && \
+       cp -r criterion-v2.3.3/include/criterion /usr/include/ && cp criterion-v2.3.3/lib/* /usr/lib/ && \
+       cp criterion-v2.3.3/share/pkgconfig/* /usr/share/pkgconfig && \
+       rm -rf criterion-v2.3.3 rm -rf criterion-v2.3.3-linux-x86_64.tar.bz2 && \
+       ln -s /usr/bin/gpg /usr/local/bin/gpg
 
 # Add non root user for running makepkg to install yay for installing some AUR packages.
 # useradd non_root && mkdir /home/non_root && chown -R non_root:non_root /home/non_root && \
@@ -31,7 +31,9 @@ RUN sed -i '93d' /etc/pacman.conf && sed -i '98d' /etc/pacman.conf;  \
 #        yay -S --noconfirm criterion && cd ~ && rm -rf yay && yes | yay -Scc' && \
 
 # Install bison-epita
-RUN git clone https://aur.archlinux.org/bison-epita.git && cd bison-epita && env EUID=1 makepkg -sirc --noconfirm && cd .. && rm -r bison-epita && \
+# RUN git clone https://aur.archlinux.org/bison-epita.git && cd bison-epita && env EUID=1 makepkg -sirc --noconfirm && cd .. && rm -r bison-epita && \
+RUN wget https://www.lrde.epita.fr/\~tiger/download/bison-3.2.1.52-cd4f7.tar.gz && tar -xvf bison-3.2.1.52-cd4f7.tar.gz && cd bison-3.2.1.52-cd4f7 && \
+       ./configure && make && make install && cd .. && rm -rf bison-3.2.1.52-cd4f7 && \
        # git clone https://aur.archlinux.org/criterion.git && cd criterion && env EUID=1 makepkg -sirc --noconfirm && cd .. && rm -r criterion && \
        yes | pacman -Scc
 
