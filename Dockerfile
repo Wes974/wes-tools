@@ -46,12 +46,12 @@ RUN sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/inst
        # Install vim-plug + Neovim providers for Python and Node.
        sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'; \
-       npm install -g neovim && pip install -U pynvim neovim && \
+       npm install -g neovim && pip install -U pynvim neovim scan-build && \
        # Move my dotfiles for Neovim and Zsh to the appropriate places.
        cp -r /dotfiles/nvim $HOME/.config/nvim && cp /dotfiles/zshrc $HOME/.zshrc && \
        cp /dotfiles/p10k.zsh $HOME/.p10k.zsh && cp /dotfiles/clang-format /.clang-format && \
        # Install vim plugins via workaround.
        nvim --headless +PlugInstall +qall && \
-       timeout 5min "nvim -c 'CocInstall -sync coc-snippets coc-pairs coc-actions coc-lists coc-highlight coc-python coc-clangd coc-sh|q'"; exit 0
+       nvim -c 'CocInstall -sync coc-snippets coc-pairs coc-actions coc-lists coc-highlight coc-python coc-clangd coc-sh|q'; exit 0
 
 WORKDIR /home
