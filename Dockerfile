@@ -1,42 +1,26 @@
-# Use Arch Linux as base image.
-FROM archlinux:latest
-
-# Work-around the issue with glibc 2.33 on old Docker engines
-# Extract files directly as pacman is also affected by the issue
-RUN patched_glibc=glibc-linux4-2.33-4-x86_64.pkg.tar.zst && \
-       curl -LO "https://repo.archlinuxcn.org/x86_64/$patched_glibc" && \
-       bsdtar -C / -xvf "$patched_glibc" && rm "$patched_glibc"
+# Use this Arch Linux base image to be multiarch
+FROM lopsided/archlinux:latest
 
 # Import dotfiles folder.
 COPY ./dotfiles dotfiles
 
 # Install what's needed.
-RUN sed -i '93d' /etc/pacman.conf && sed -i '98d' /etc/pacman.conf;  \ 
-       # yes | pacman -Syuu; \
-       pacman -Sy --needed --noconfirm - < dotfiles/pkglist.txt
+RUN pacman -Syuu --needed --noconfirm - < dotfiles/pkglist.txt && \
+       find /. -name "*~" -type f -delete && \
+       pacman -Sc && \
+       rm -r /var/lib/pacman/sync/*
 
-# Manual install of Criterion.
-# Can be replace with commented code below, which will install yay if you want to install AUR packages.
-# (A bit of an overkill for just Criterion).
-RUN wget https://github.com/Snaipe/Criterion/releases/download/v2.3.3/criterion-v2.3.3-linux-x86_64.tar.bz2 -O - | tar -xj && \
-       cp -r criterion-v2.3.3/include/criterion /usr/include/ && cp criterion-v2.3.3/lib/* /usr/lib/ && \
-       cp criterion-v2.3.3/share/pkgconfig/* /usr/share/pkgconfig && \
-       rm -rf criterion-v2.3.3 rm -rf criterion-v2.3.3-linux-x86_64.tar.bz2 && \
-       ln -s /usr/bin/gpg /usr/local/bin/gpg
+# Manual install of Criterion and bison-epita
+# RUN wget https://www.lrde.epita.fr/\~tiger/download/bison-3.2.1.52-cd4f7.tar.gz && tar -xvf bison-3.2.1.52-cd4f7.tar.gz && cd bison-3.2.1.52-cd4f7 && \
+#        ./configure && make && make install && cd .. && rm -rf bison-3.2.1.52-cd4f7 && rm bison-3.2.1.52-cd4f7.tar.gz && \
+#        # Dependency for Criterion
+#        git clone https://github.com/Snaipe/libcsptr.git && cd libcsptr && mkdir build && cd $_ && cmake -DCMAKE_INSTALL_PREFIX=/usr .. && \
+#        make && make install && cd ../.. && rm -rf libcsptr && \
+#        # Install Criterion
+#        git clone --recursive https://github.com/Snaipe/Criterion && cd Criterion && \
+#        meson build && ninja -C build install && cd .. && rm -rf Criterion
 
-# Add non root user for running makepkg to install yay for installing some AUR packages.
-# useradd non_root && mkdir /home/non_root && chown -R non_root:non_root /home/non_root && \
-# echo 'non_root ALL=NOPASSWD: ALL' >> /etc/sudoers && \
-# sudo -u non_root bash -c 'cd ~ && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si --noconfirm && \
-#        yay -S --noconfirm criterion && cd ~ && rm -rf yay && yes | yay -Scc' && \
-
-# Install bison-epita
-# RUN git clone https://aur.archlinux.org/bison-epita.git && cd bison-epita && env EUID=1 makepkg -sirc --noconfirm && cd .. && rm -r bison-epita && \
-RUN wget https://www.lrde.epita.fr/\~tiger/download/bison-3.2.1.52-cd4f7.tar.gz && tar -xvf bison-3.2.1.52-cd4f7.tar.gz && cd bison-3.2.1.52-cd4f7 && \
-       ./configure && make && make install && cd .. && rm -rf bison-3.2.1.52-cd4f7 && \
-       # git clone https://aur.archlinux.org/criterion.git && cd criterion && env EUID=1 makepkg -sirc --noconfirm && cd .. && rm -r criterion && \
-       yes | pacman -Scc
-
+# TODO: Replace with new neovim config
 # Install oh-my-zsh and some plugins + powerlevel10k and build gitstatus.
 RUN sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" && \
        git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting && \
@@ -48,10 +32,14 @@ RUN sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/inst
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'; \
        npm install -g neovim && pip install -U pynvim neovim scan-build && \
        # Move my dotfiles for Neovim and Zsh to the appropriate places.
+       mkdir -p $HOME/.config && \
        cp -r /dotfiles/nvim $HOME/.config/nvim && cp /dotfiles/zshrc $HOME/.zshrc && \
        cp /dotfiles/p10k.zsh $HOME/.p10k.zsh && cp /dotfiles/clang-format /.clang-format && \
        # Install vim plugins via workaround.
        nvim --headless +PlugInstall +qall && \
-       nvim -c 'CocInstall -sync coc-snippets coc-pairs coc-actions coc-lists coc-highlight coc-python coc-clangd coc-sh|q'; exit 0
+       nvim --headless -c 'CocInstall -sync coc-snippets coc-pairs coc-actions coc-lists coc-highlight coc-python coc-clangd coc-sh|q' +qall && \
+       rm -rf dotfiles && \
+       npm cache clean --force && pip cache purge
 
 WORKDIR /home
+CMD [ "/bin/zsh" ]
