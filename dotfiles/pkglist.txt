@@ -8,7 +8,6 @@ boost-libs
 clang
 cmake
 coreutils
-ctags
 curl
 flex
 gcc
@@ -33,6 +32,8 @@ make
 man
 man-db
 man-pages
+meson
+nanomsg
 neovim
 nodejs
 npm
@@ -45,7 +46,6 @@ python
 python-pip
 python-pre-commit
 screen
-shellcheck
 strace
 tar
 tmux
